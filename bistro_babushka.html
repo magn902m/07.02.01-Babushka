@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bistro Babushka</title>
+</head>
+<body>
+    <style>
+     * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+       }
+
+      section {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 10px;
+      }
+
+      article {
+        border: 3px solid green;
+        padding: 10px;
+        border-radius: 5px;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      h2 {
+          display: flex;
+          justify-content: center;
+      }
+
+      header ul {
+          display: flex;
+          flex-direction: row;
+          list-style: none;
+          justify-content: center;
+          gap: 1rem;
+      }
+    </style>
+  <body>
+      <header>
+          <nav>
+            <ul>
+                <li><a href="">Alle</a></li>
+                <li><a href="">Forretter</a></li>
+                <li><a href="">Hovedretter</a></li>
+                <li><a href="">Desserter</a></li>
+                <li><a href="">Drikkevarer</a></li>
+            </ul>
+         </nav>
+      </header>
+      <main>
+          <h1></h1>
+          <h2>Menu</h2>
+    <section></section>
+    </main>
+    <template>
+      <article>
+          <img src="" alt="" class="billede">
+          <h3 class="navn"></h3>
+          <p class="kortbeskrivelse"></p>
+          <p class="pris"></p>
+      </article>
+    </template>
+    <script>
+      //Kontroller om DOM´en er loaded
+      window.addEventListener("DOMContentLoaded", start);
+
+      function start() {
+          
+        const container = document.querySelector("section");
+        const temp = document.querySelector("template");
+
+        const url = "https://babushka-dd8a.restdb.io/rest/menu";
+        const key = "600ec2fb1346a1524ff12de4"
+        const options = {
+            headers: {
+                'x-apikey': key
+            }
+        };
+    
+        async function hentData() {
+            const respons = await fetch(url, options);
+            const json = await respons.json();
+            vis(json);
+            console.log(json);
+        }
+
+        function vis(elm) {
+          //løb igennem array "personer"
+
+          elm.forEach((info) => {
+            let klon = temp.cloneNode(true).content;
+            const md = "-md.jpg";
+            klon.querySelector(".billede").src = "medium/" + info.billednavn + md;
+            klon.querySelector(".navn").textContent = info.navn;
+            klon.querySelector(".kortbeskrivelse").textContent = info.kortbeskrivelse;
+            klon.querySelector(".pris").textContent = "Pris: " + info.pris;
+            container.appendChild(klon);
+          });
+          }
+          hentData();
+        }
+    </script>
+</body>
+</html>
