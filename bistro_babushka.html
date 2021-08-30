@@ -36,29 +36,42 @@
           justify-content: center;
       }
 
-      header ul {
+      header nav {
           display: flex;
-          flex-direction: row;
-          list-style: none;
           justify-content: center;
           gap: 1rem;
+          margin: 0.2rem;
+          padding: 0.2rem;
+      }
+
+      #h1_bg {
+        display: flex;
+        justify-content: center;
+        background-color: orange;
+        padding: 3rem;
+        font-size: 1.4rem;
+      }
+
+      #h1_bg h1 {
+        color: orangered;
       }
     </style>
   <body>
       <header>
+        <div id="h1_bg">
+        <h1>Bistro Babushka</h1>
+        </div>
           <nav>
-            <ul>
-                <li><a href="">Alle</a></li>
-                <li><a href="">Forretter</a></li>
-                <li><a href="">Hovedretter</a></li>
-                <li><a href="">Desserter</a></li>
-                <li><a href="">Drikkevarer</a></li>
-            </ul>
+            <button data-kategori="alle" class="valgt">Alle</button>
+            <button data-kategori="forretter">Forretter</button>
+            <button data-kategori="hovedretter">Hovedretter</button>
+            <button data-kategori="desserter">Desserter</button>
+            <button data-kategori="drikkevarer">Drikkevarer</button>
          </nav>
+         <h2 class="txt_kategori">Alle</h2>
+          <h2>Menu</h2>
       </header>
       <main>
-          <h1></h1>
-          <h2>Menu</h2>
     <section></section>
     </main>
     <template>
@@ -74,9 +87,6 @@
       window.addEventListener("DOMContentLoaded", start);
 
       function start() {
-          
-        const container = document.querySelector("section");
-        const temp = document.querySelector("template");
 
         const url = "https://babushka-dd8a.restdb.io/rest/menu";
         const key = "600ec2fb1346a1524ff12de4"
@@ -85,28 +95,51 @@
                 'x-apikey': key
             }
         };
+
+        let kategorier;
+        let filter = "alle";
     
-        async function hentData() {
-            const respons = await fetch(url, options);
-            const json = await respons.json();
-            vis(json);
-            console.log(json);
+        const filterKnapper = document.querySelectorAll("nav button");
+        filterKnapper.forEach(knap => knap.addEventListener("click", filtrerKategori));
+        loadJSON();
+
+        function filtrerKategori(){
+          filter = this.dataset.kategori;
+          document.querySelector(".valgt").classList.remove("valgt");
+          this.classList.add("valgt");
+
+          vis();
+
+          const txtKategori = document.querySelector("header .txt_kategori");
+          console.log(this);
+          txtKategori.textContent = this.textContent;
         }
 
-        function vis(elm) {
-          //løb igennem array "personer"
+        async function loadJSON() {
+          const JSONData = await fetch(url, options);
+          const jsonFile = await JSONData.json();
+          kategorier = jsonFile;
+          console.log(jsonFile);
+          vis();
+        }
 
-          elm.forEach((info) => {
+        function vis() {
+          const container = document.querySelector("section");
+          const temp = document.querySelector("template");
+          container.textContent = "";
+
+          kategorier.forEach((info) => {
+            if (filter == info.kategori || filter == "alle") {
             let klon = temp.cloneNode(true).content;
             const md = "-md.jpg";
             klon.querySelector(".billede").src = "medium/" + info.billednavn + md;
             klon.querySelector(".navn").textContent = info.navn;
             klon.querySelector(".kortbeskrivelse").textContent = info.kortbeskrivelse;
-            klon.querySelector(".pris").textContent = "Pris: " + info.pris;
+            klon.querySelector(".pris").textContent = "Pris: " + info.pris + " kr.-";
             container.appendChild(klon);
+            }
           });
           }
-          hentData();
         }
     </script>
 </body>
