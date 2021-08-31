@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bistro Babushka popup</title>
+</head>
+<body>
+    <style>
+     * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+       }
+
+       main {
+        display: grid;
+        grid-template-columns: 1fr minmax(0, 800px) 1fr;
+       }
+
+      section {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 10px;
+        grid-column: 2/3;
+      }
+
+      article {
+        border: 3px solid orange;
+        padding: 10px;
+        border-radius: 5px;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      h2 {
+          display: flex;
+          justify-content: center;
+      }
+
+      header nav {
+          display: flex;
+          justify-content: center;
+          gap: 1rem;
+          margin: 0.8rem 0rem;
+      }
+
+      button {
+        margin: 0.2rem;
+          padding: 0.2rem;
+      }
+
+      h1 {
+        color: orangered;
+        display: flex;
+        justify-content: center;
+        background-color: orange;
+        padding: 3rem;
+        font-size: 4.5rem;
+      }
+
+      .valgt {
+        background-color: gray;
+      }
+
+      .menu:nth-child(odd) {
+      background-color: papayawhip;
+      }
+
+      .menu {
+        transition: 250ms ease-in;
+        padding: 1rem;
+        /* background-color: peru; */
+        outline: 0.125rem solid orange;
+        cursor: pointer;
+
+      }
+
+      .menu:hover {
+        outline-offset: 0.125rem;
+      }
+
+      #popup {
+        width: 100vw;
+        height: 100vh;
+        background-color: #00000099;
+        position: fixed;
+        top: 0;
+        padding: 2rem;
+        display: none;
+      }
+
+      #popup article {
+        background-color: white;
+        width: 85%;
+      }
+
+      #popup img {
+        max-width: 450px;
+      }
+    </style>
+  <body>
+      <header>
+        <h1>Bistro Babushka</h1>
+        <h2 class="txt_kategori">Alle</h2>
+          <nav>
+            <button data-kategori="alle" class="valgt">Alle</button>
+            <button data-kategori="forretter">Forretter</button>
+            <button data-kategori="hovedretter">Hovedretter</button>
+            <button data-kategori="sideorders">Sideorders</button>
+            <button data-kategori="desserter">Desserter</button>
+            <button data-kategori="drikkevarer">Drikkevarer</button>
+         </nav>
+      </header>
+      <main>
+    <section></section>
+    </main>
+    <footer>
+      <p>Adresse: </p>
+      <p>Åbenningstider: </p>
+    </footer>
+    <template>
+      <article class="menu">
+          <h3 class="navn"></h3>
+          <img src="" alt="" class="billede">
+          <h4 class="kategori"> </h4>
+          <p class="kortbeskrivelse"></p>
+          <p class="pris"></p>
+      </article>
+    </template>
+
+    <section id="popup">
+      <button>X</button>
+       <article >
+        <h2><span class="navn"></span></h2>
+        <img src="" alt="" class="billede"/>
+        <p><span class="kategori"></span></p>
+        <p><span class="langbeskrivelse"></span></p>
+        <p><span class="pris"></span></p>
+      </article>
+    </section>
+    <script>
+      //Kontroller om DOM´en er loaded
+      window.addEventListener("DOMContentLoaded", start);
+
+      function start() {
+
+        const url = "https://babushka-dd8a.restdb.io/rest/menu";
+        const key = "600ec2fb1346a1524ff12de4"
+        const options = {
+            headers: {
+                'x-apikey': key
+            }
+        };
+
+        let kategorier;
+        let filter = "alle";
+    
+        const filterKnapper = document.querySelectorAll("nav button");
+        filterKnapper.forEach(knap => knap.addEventListener("click", filtrerKategori));
+        loadJSON();
+
+        function filtrerKategori(){
+          filter = this.dataset.kategori;
+          document.querySelector(".valgt").classList.remove("valgt");
+          this.classList.add("valgt");
+
+          vis();
+
+          const txtKategori = document.querySelector("header .txt_kategori");
+          console.log(this);
+          txtKategori.textContent = "Menu: " + this.textContent;
+        }
+
+        async function loadJSON() {
+          const JSONData = await fetch(url, options);
+          const jsonFile = await JSONData.json();
+          kategorier = jsonFile;
+          console.log(jsonFile);
+          vis();
+        }
+
+        function vis() {
+          const container = document.querySelector("section");
+          const temp = document.querySelector("template");
+          container.textContent = "";
+
+          kategorier.forEach((info) => {
+            if (filter == info.kategori || filter == "alle") {
+            let klon = temp.cloneNode(true).content;
+            const md = "-md.jpg";
+            klon.querySelector(".navn").textContent = info.navn;
+            klon.querySelector(".billede").src = "medium/" + info.billednavn + md;
+            klon.querySelector(".kategori").textContent = info.kategori;
+            klon.querySelector(".kortbeskrivelse").textContent = info.kortbeskrivelse;
+            klon.querySelector(".pris").textContent = "Pris: " + info.pris + " kr.-";
+            klon.querySelector("article").addEventListener("click",()=>visDetaljer(info));
+            container.appendChild(klon);
+            }
+          });
+          }
+        }
+
+        document.querySelector("#popup button").addEventListener("click", lukPopup);
+
+        function lukPopup(){
+            document.querySelector("#popup").style.display = "none";
+        }
+
+        function visDetaljer(detaljer){
+            console.log(detaljer);
+            const popup = document.querySelector("#popup");
+
+            popup.style.display = "block";
+            popup.querySelector(".navn").textContent = detaljer.navn;
+            popup.querySelector(".billede").src =
+              "medium/" + detaljer.billednavn + "-md.jpg";
+            popup.querySelector(".kategori").textContent = detaljer.kategori;
+            popup.querySelector(".langbeskrivelse").textContent = 
+            "Beskrivelse: " + detaljer.langbeskrivelse;
+            popup.querySelector(".pris").textContent =
+              "Pris: " + detaljer.pris + " kr.-";
+        }  
+    </script>
+</body>
+</html>
