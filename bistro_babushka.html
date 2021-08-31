@@ -14,14 +14,20 @@
         padding: 0;
        }
 
+       main {
+        display: grid;
+        grid-template-columns: 1fr minmax(0, 800px) 1fr;
+       }
+
       section {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: 10px;
+        grid-column: 2/3;
       }
 
       article {
-        border: 3px solid green;
+        border: 3px solid orange;
         padding: 10px;
         border-radius: 5px;
       }
@@ -47,27 +53,27 @@
           padding: 0.2rem;
       }
 
-      #h1_bg {
+      h1 {
+        color: orangered;
         display: flex;
         justify-content: center;
         background-color: orange;
         padding: 3rem;
-        font-size: 1.4rem;
-      }
-
-      #h1_bg h1 {
-        color: orangered;
+        font-size: 4.5rem;
       }
 
       .valgt {
         background-color: gray;
       }
+
+      .menu:nth-child(odd) {
+      background-color: papayawhip;
+      }
     </style>
   <body>
       <header>
-        <div id="h1_bg">
         <h1>Bistro Babushka</h1>
-        </div>
+        <h2 class="txt_kategori">Alle</h2>
           <nav>
             <button data-kategori="alle" class="valgt">Alle</button>
             <button data-kategori="forretter">Forretter</button>
@@ -75,14 +81,15 @@
             <button data-kategori="desserter">Desserter</button>
             <button data-kategori="drikkevarer">Drikkevarer</button>
          </nav>
-         <h2 class="txt_kategori">Alle</h2>
-          <h2>Menu</h2>
       </header>
       <main>
     <section></section>
     </main>
+    <footer>
+      <p>Ad</p>
+    </footer>
     <template>
-      <article>
+      <article class="menu">
           <img src="" alt="" class="billede">
           <h3 class="navn"></h3>
           <p class="kortbeskrivelse"></p>
@@ -119,7 +126,7 @@
 
           const txtKategori = document.querySelector("header .txt_kategori");
           console.log(this);
-          txtKategori.textContent = this.textContent;
+          txtKategori.textContent = "Menu: " +this.textContent;
         }
 
         async function loadJSON() {
