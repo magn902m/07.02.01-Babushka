@@ -69,6 +69,18 @@
       .menu:nth-child(odd) {
       background-color: papayawhip;
       }
+
+      .menu {
+        transition: 250ms ease-in;
+        padding: 1rem;
+        /* background-color: peru; */
+        outline: 0.125rem solid orange;
+
+      }
+
+      .menu:hover {
+        outline-offset: 0.125rem;
+      }
     </style>
   <body>
       <header>
@@ -154,6 +166,9 @@
             klon.querySelector(".kategori").textContent = info.kategori;
             klon.querySelector(".kortbeskrivelse").textContent = info.kortbeskrivelse;
             klon.querySelector(".pris").textContent = "Pris: " + info.pris + " kr.-";
+            klon.querySelector("article").addEventListener("click",()=>{
+              location.href = "single_view.html?id="+info._id;
+            })
             container.appendChild(klon);
             }
           });

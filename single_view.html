@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Single view</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      main {
+        display: grid;
+        grid-template-columns: 1fr minmax(0, 800px) 1fr;
+      }
+
+      section {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 10px;
+        grid-column: 2/3;
+      }
+
+      article {
+        border: 3px solid orange;
+        padding: 10px;
+        border-radius: 5px;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      h2 {
+        display: flex;
+        justify-content: center;
+      }
+
+      header nav {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+      }
+
+      button {
+        margin: 0.2rem;
+        padding: 0.2rem;
+      }
+
+      h1 {
+        color: orangered;
+        display: flex;
+        justify-content: center;
+        background-color: orange;
+        padding: 3rem;
+        font-size: 4.5rem;
+      }
+
+      .valgt {
+        background-color: gray;
+      }
+
+      .menu:nth-child(odd) {
+        background-color: papayawhip;
+      }
+
+      .menu {
+        transition: 500ms ease-in;
+        padding: 1rem;
+        /* background-color: peru; */
+        outline: 0.125rem solid orange;
+      }
+
+      .menu:hover {
+        outline-offset: 0.125rem;
+      }
+    </style>
+  </head>
+  <body>
+    <article class="menu">
+      <button>Tilbage!</button>
+      <h3 class="navn"></h3>
+      <img src="" alt="" class="billede" />
+      <h4 class="kategori"></h4>
+      <p class="langbeskrivelse"></p>
+      <p class="pris"></p>
+    </article>
+
+    <script>
+      const url = "https://babushka-dd8a.restdb.io/rest/menu/";
+      const key = "600ec2fb1346a1524ff12de4";
+      const options = {
+        headers: {
+          "x-apikey": key,
+        },
+      };
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get("id");
+      let type;
+
+      document.addEventListener("DOMContentLoaded", loadJSON);
+
+      async function loadJSON() {
+        const JSONData = await fetch(url + id, options);
+        type = await JSONData.json();
+        console.log(type);
+        visPersoner();
+      }
+
+      function visPersoner() {
+        document.querySelector(".navn").textContent = type.navn;
+        document.querySelector(".billede").src =
+          "medium/" + type.billednavn + "-md.jpg";
+        document.querySelector(".kategori").textContent = type.kategori;
+        document.querySelector(".langbeskrivelse").textContent =
+          type.langbeskrivelse;
+        document.querySelector(".pris").textContent =
+          "Pris: " + type.pris + " kr.-";
+      }
+
+      document.querySelector("button").addEventListener("click", () => {
+        location.href = "bistro_babushka.html?id=";
+      });
+    </script>
+  </body>
+</html>
