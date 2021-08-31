@@ -78,6 +78,7 @@
             <button data-kategori="alle" class="valgt">Alle</button>
             <button data-kategori="forretter">Forretter</button>
             <button data-kategori="hovedretter">Hovedretter</button>
+            <button data-kategori="sideorders">Sideorders</button>
             <button data-kategori="desserter">Desserter</button>
             <button data-kategori="drikkevarer">Drikkevarer</button>
          </nav>
@@ -86,12 +87,14 @@
     <section></section>
     </main>
     <footer>
-      <p>Ad</p>
+      <p>Adresse: </p>
+      <p>Åbenningstider: </p>
     </footer>
     <template>
       <article class="menu">
-          <img src="" alt="" class="billede">
           <h3 class="navn"></h3>
+          <img src="" alt="" class="billede">
+          <h4 class="kategori"> </h4>
           <p class="kortbeskrivelse"></p>
           <p class="pris"></p>
       </article>
@@ -126,7 +129,7 @@
 
           const txtKategori = document.querySelector("header .txt_kategori");
           console.log(this);
-          txtKategori.textContent = "Menu: " +this.textContent;
+          txtKategori.textContent = "Menu: " + this.textContent;
         }
 
         async function loadJSON() {
@@ -146,8 +149,9 @@
             if (filter == info.kategori || filter == "alle") {
             let klon = temp.cloneNode(true).content;
             const md = "-md.jpg";
-            klon.querySelector(".billede").src = "medium/" + info.billednavn + md;
             klon.querySelector(".navn").textContent = info.navn;
+            klon.querySelector(".billede").src = "medium/" + info.billednavn + md;
+            klon.querySelector(".kategori").textContent = info.kategori;
             klon.querySelector(".kortbeskrivelse").textContent = info.kortbeskrivelse;
             klon.querySelector(".pris").textContent = "Pris: " + info.pris + " kr.-";
             container.appendChild(klon);
@@ -155,6 +159,9 @@
           });
           }
         }
+
+        
+
     </script>
 </body>
 </html>
