@@ -14,9 +14,17 @@
         padding: 0;
        }
 
+       body {
+         background-color: wheat;
+       }
+
        main {
         display: grid;
         grid-template-columns: 1fr minmax(0, 800px) 1fr;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        padding-left: 1rem;
+        padding-right: 1rem;
        }
 
       section {
@@ -27,9 +35,15 @@
       }
 
       article {
-        border: 3px solid orange;
+        outline: 5px solid orange;
+        border: 1px solid orange;
         padding: 10px;
         border-radius: 5px;
+      }
+
+      article img {
+        border-radius: 5px;
+        outline: 3px solid papayawhip;
       }
 
       img {
@@ -37,21 +51,43 @@
         height: auto;
       }
 
-      h2 {
-          display: flex;
-          justify-content: center;
-      }
-
       header nav {
           display: flex;
           justify-content: center;
-          gap: 1rem;
-          margin: 0.8rem 0rem;
+          margin: 0rem 5rem 1rem 5rem;
+          overflow-x: auto;
+          flex-direction: column;
+      }
+
+      footer {
+        display: flex;
+        justify-content: center;
+        gap: 5rem;
+        margin-top: 2rem;
+        padding-bottom: 2rem;
+        border-top: 0.125rem solid #000;
+        background-color: orange;
+      }
+
+      footer p {
+        padding-top: 1rem;
+        color: orangered;
+        font-weight: bold;
       }
 
       button {
         margin: 0.2rem;
-          padding: 0.2rem;
+        padding: 0.2rem;
+        border-radius: 5px;
+        transition: 250ms ease-in;
+        outline: .125rem solid #000;
+        border: none;
+        border: 0.125rem solid #000;
+      }
+
+      button:hover {
+        /* background-color: orange; */
+        outline-offset: 0.125rem;
       }
 
       h1 {
@@ -61,27 +97,41 @@
         background-color: orange;
         padding: 3rem;
         font-size: 4.5rem;
+        border-bottom: 0.125rem solid #000;
+      }
+
+      h2 {
+        display: flex;
+        justify-content: center;
+        margin-top: 0.8rem;
+        margin-bottom: 0.5rem;
       }
 
       .valgt {
-        background-color: gray;
+        background-color: orangered;
       }
 
       .menu:nth-child(odd) {
-      background-color: papayawhip;
+        background-color: papayawhip;
+      }
+
+      .menu:nth-child(even) {
+        background-color:beige;
       }
 
       .menu {
         transition: 250ms ease-in;
         padding: 1rem;
-        /* background-color: peru; */
         outline: 0.125rem solid orange;
         cursor: pointer;
-
       }
 
       .menu:hover {
         outline-offset: 0.125rem;
+      }
+
+      article .klik_info {
+        text-align: end;
       }
 
       #popup {
@@ -92,15 +142,41 @@
         top: 0;
         padding: 2rem;
         display: none;
+        padding: 2% 10% 0 10%;
       }
 
       #popup article {
         background-color: white;
-        width: 85%;
+        display: grid;
+        place-items: center;
       }
 
       #popup img {
-        max-width: 450px;
+        max-width: 55%;
+        border-radius: 5px;
+        outline: 3px solid papayawhip;
+        margin-bottom: .5rem;
+      }
+
+      #popup p {
+        margin-bottom: 0.2rem;
+      }
+
+      #popup button {
+        font-size: 1.5rem;
+        position: absolute;
+        top: 3vw;
+        left: 11vw;
+      }
+
+      @media (min-width: 542px){
+        header nav {
+          display: flex;
+          justify-content: center;
+          gap: 1rem;
+          margin: 0.8rem 0rem;
+          flex-direction: row;
+        }
       }
     </style>
   <body>
@@ -120,8 +196,8 @@
     <section></section>
     </main>
     <footer>
-      <p>Adresse: </p>
-      <p>Åbenningstider: </p>
+      <p>Adresse:<br>Grønnegade 97a<br>1234 København K</p>
+      <p>Åbenningstider:<br>Mandag - fredag 10:30 - 22:00<br>Lørdag 12:00 - 23:00</p>
     </footer>
     <template>
       <article class="menu">
@@ -130,6 +206,7 @@
           <h4 class="kategori"> </h4>
           <p class="kortbeskrivelse"></p>
           <p class="pris"></p>
+          <p class="klik_info">Klik for mere info</p>
       </article>
     </template>
 
@@ -138,9 +215,9 @@
        <article >
         <h2><span class="navn"></span></h2>
         <img src="" alt="" class="billede"/>
-        <p><span class="kategori"></span></p>
-        <p><span class="langbeskrivelse"></span></p>
-        <p><span class="pris"></span></p>
+        <p><b>Kategori: </b><span class="kategori"></span></p>
+        <p><b>Beskrivelse: </b><span class="langbeskrivelse"></span></p>
+        <p><b>Pris: </b><span class="pris"></span></p>
       </article>
     </section>
     <script>
@@ -173,7 +250,7 @@
 
           const txtKategori = document.querySelector("header .txt_kategori");
           console.log(this);
-          txtKategori.textContent = "Menu: " + this.textContent;
+          txtKategori.textContent = "Flitrer: " + this.textContent;
         }
 
         async function loadJSON() {
@@ -220,10 +297,8 @@
             popup.querySelector(".billede").src =
               "medium/" + detaljer.billednavn + "-md.jpg";
             popup.querySelector(".kategori").textContent = detaljer.kategori;
-            popup.querySelector(".langbeskrivelse").textContent = 
-            "Beskrivelse: " + detaljer.langbeskrivelse;
-            popup.querySelector(".pris").textContent =
-              "Pris: " + detaljer.pris + " kr.-";
+            popup.querySelector(".langbeskrivelse").textContent = detaljer.langbeskrivelse;
+            popup.querySelector(".pris").textContent = detaljer.pris + " kr.-";
         }  
     </script>
 </body>
