@@ -12,22 +12,8 @@
         padding: 0;
       }
 
-      main {
-        display: grid;
-        grid-template-columns: 1fr minmax(0, 800px) 1fr;
-      }
-
-      section {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 10px;
-        grid-column: 2/3;
-      }
-
-      article {
-        border: 3px solid orange;
-        padding: 10px;
-        border-radius: 5px;
+      body {
+        background-color: wheat;
       }
 
       img {
@@ -35,20 +21,43 @@
         height: auto;
       }
 
-      h2 {
-        display: flex;
-        justify-content: center;
-      }
-
       header nav {
         display: flex;
         justify-content: center;
-        gap: 1rem;
+        margin: 0rem 5rem 1rem 5rem;
+        overflow-x: auto;
+        flex-direction: column;
+      }
+
+      footer {
+        display: flex;
+        justify-content: center;
+        gap: 5rem;
+        margin-top: 2rem;
+        padding-bottom: 2rem;
+        border-top: 0.125rem solid #000;
+        background-color: orange;
+      }
+
+      footer p {
+        padding-top: 1rem;
+        color: orangered;
+        font-weight: bold;
       }
 
       button {
         margin: 0.2rem;
         padding: 0.2rem;
+        border-radius: 5px;
+        transition: 250ms ease-in;
+        outline: 0.125rem solid #000;
+        border: none;
+        border: 0.125rem solid #000;
+      }
+
+      button:hover {
+        /* background-color: orange; */
+        outline-offset: 0.125rem;
       }
 
       h1 {
@@ -58,36 +67,89 @@
         background-color: orange;
         padding: 3rem;
         font-size: 4.5rem;
+        border-bottom: 0.125rem solid #000;
+      }
+
+      h2 {
+        display: flex;
+        justify-content: center;
+        margin-top: 0.8rem;
+        margin-bottom: 0.5rem;
+        grid-column: 2/3;
       }
 
       .valgt {
-        background-color: gray;
+        background-color: orangered;
       }
 
       .menu:nth-child(odd) {
         background-color: papayawhip;
       }
 
+      .menu:nth-child(even) {
+        background-color: beige;
+      }
+
       .menu {
-        transition: 500ms ease-in;
-        padding: 1rem;
-        /* background-color: peru; */
         outline: 0.125rem solid orange;
+        border: 1px solid orange;
+        padding: 10px;
+        border-radius: 5px;
+        display: grid;
+        grid-template-columns: 1fr 5fr 1fr;
+
+        place-content: center;
+        /* cursor: pointer; */
+        transition: 250ms ease-in;
+        margin: 1rem;
       }
 
       .menu:hover {
         outline-offset: 0.125rem;
       }
+
+      article .klik_info {
+        text-align: end;
+      }
+
+      .menu img {
+        max-width: 55%;
+        border-radius: 5px;
+        outline: 3px solid papayawhip;
+        margin-bottom: 0.5rem;
+        grid-column: 2/3;
+      }
+
+      .menu p {
+        margin-bottom: 0.2rem;
+        grid-column: 2/3;
+      }
+
+      #back_knap {
+        position: absolute;
+        top: 3vw;
+        left: 3vw;
+      }
+
+      @media (min-width: 542px) {
+        header nav {
+          display: flex;
+          justify-content: center;
+          gap: 1rem;
+          margin: 0.8rem 0rem;
+          flex-direction: row;
+        }
+      }
     </style>
   </head>
   <body>
+    <button id="back_knap">Tilbage!</button>
     <article class="menu">
-      <button>Tilbage!</button>
-      <h3 class="navn"></h3>
+      <h2><span class="navn"></span></h2>
       <img src="" alt="" class="billede" />
-      <h4 class="kategori"></h4>
-      <p class="langbeskrivelse"></p>
-      <p class="pris"></p>
+      <p><b>Kategori: </b><span class="kategori"></span></p>
+      <p><b>Beskrivelse: </b><span class="langbeskrivelse"></span></p>
+      <p><b>Pris: </b><span class="pris"></span></p>
     </article>
 
     <script>
