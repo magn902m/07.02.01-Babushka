@@ -134,7 +134,7 @@
 
       #mere_salg .section_wrapper {
         display: flex;
-        grid-template-columns: repeat(3, 1fr);
+        justify-content: center;
       }
 
       @media (min-width: 542px) {
@@ -168,8 +168,23 @@
       </article>
 
       <section id="mere_salg">
-        <!-- <h2>Måske du ville kunne lide?</h2> -->
-        <section class="section_wrapper"></section>
+        <h2>Måske du ville kunne lide?</h2>
+        <section class="section_wrapper">
+          <article class="menu">
+            <p><b>Kategori: </b><span class="kategori"></span></p>
+            <h2><span class="navn"></span></h2>
+            <img src="" alt="" class="billede" />
+            <p><b>Beskrivelse: </b><span class="kortbeskrivelse"></span></p>
+            <p><b>Pris: </b><span class="pris"></span></p>
+          </article>
+          <article class="menu">
+            <p><b>Kategori: </b><span class="kategori"></span></p>
+            <h2><span class="navn"></span></h2>
+            <img src="" alt="" class="billede" />
+            <p><b>Beskrivelse: </b><span class="kortbeskrivelse"></span></p>
+            <p><b>Pris: </b><span class="pris"></span></p>
+          </article>
+        </section>
       </section>
     </main>
     <footer>
@@ -203,7 +218,7 @@
       const id = urlParams.get("id");
 
       let madInfo;
-      let number = 0;
+      // let number = 0;
 
       document.addEventListener("DOMContentLoaded", loadJSON);
 
@@ -213,7 +228,12 @@
         madInfo = jsonFile;
         console.log(madInfo);
         visMad(jsonFile);
-        // visMereMad(jsonFile);
+
+        // const JSONDataAlt = await fetch(url, options);
+        // const jsonFileAlt = await JSONDataAlt.json();
+        // madInfoAlt = jsonFileAlt;
+        // console.log(madInfoAlt);
+        // visMereMad(jsonFileAlt);
       }
 
       function visMad(madInfo) {
@@ -225,22 +245,22 @@
           madInfo.langbeskrivelse;
         document.querySelector(".oprindelsesregion").textContent =
           madInfo.oprindelsesregion;
-        document.querySelector(".pris").textContent =
-          "Pris: " + madInfo.pris + " kr.-";
+        document.querySelector(".pris").textContent = madInfo.pris + " kr.-";
       }
 
-      // function visMereMad(madInfo) {
+      // function visMereMad(madInfoAlt) {
       //   // console.log("visMereMad");
       //   const container = document.querySelector(".section_wrapper");
       //   const temp = document.querySelector(".mere_salg_temp");
-      //   container.textContent = "";
+      //   // container.textContent = "";
 
-      //   madInfo.forEach((lidtInfo) => {
+      //   madInfoAlt.forEach((kortMadInfo) => {
+      //     console.log("Det virker, kortMadInfo");
       //     if (number < 3) {
-      //       let klon = temp.cloneNode(true).content;
-      //       klon.querySelector(".navn").textContent = lidtInfo.navn;
-      //       container.appendChild(klon);
-      //       number++;
+      //     let klon = temp.cloneNode(true).content;
+      //     klon.querySelector(".navn").textContent = kortMadInfo.navn;
+      //     container.appendChild(klon);
+      //     number++;
       //     }
       //   });
       // }
