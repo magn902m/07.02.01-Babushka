@@ -10,6 +10,7 @@
         box-sizing: border-box;
         margin: 0;
         padding: 0;
+        text-decoration: none;
       }
 
       body {
@@ -30,8 +31,7 @@
       }
 
       footer {
-        display: flex;
-        justify-content: center;
+        text-align: center;
         gap: 5rem;
         margin-top: 2rem;
         padding-bottom: 2rem;
@@ -62,13 +62,17 @@
 
       h1 {
         color: orangered;
-        display: flex;
-        justify-content: center;
+        text-align: center;
         background-color: orange;
         padding: 3rem;
-        font-size: 4.5rem;
+        font-size: 2.3rem;
         border-bottom: 0.125rem solid #000;
         text-transform: uppercase;
+      }
+
+      h1:hover {
+        background-color: rgb(255, 208, 0);
+        /* color: rgb(255, 208, 0); */
       }
 
       h2 {
@@ -134,19 +138,20 @@
       }
 
       @media (min-width: 542px) {
-        header nav {
+        h1 {
+          font-size: 4.5rem;
+        }
+
+        footer {
           display: flex;
           justify-content: center;
-          gap: 1rem;
-          margin: 0.8rem 0rem;
-          flex-direction: row;
         }
       }
     </style>
   </head>
   <body>
     <header>
-      <h1>Bistro Babushka</h1>
+      <a href="bistro_babushka.html#"><h1>Bis&shy;tro Babush&shy;ka</h1></a>
     </header>
     <main>
       <article class="menu">

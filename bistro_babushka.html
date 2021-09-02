@@ -12,6 +12,7 @@
         box-sizing: border-box;
         margin: 0;
         padding: 0;
+        text-decoration: none;
        }
 
        body {
@@ -51,17 +52,36 @@
         height: auto;
       }
 
-      header nav {
-          display: flex;
-          justify-content: center;
-          margin: 0rem 5rem 1rem 5rem;
-          overflow-x: auto;
-          flex-direction: column;
+      /* Menu start */
+
+      header #menu {
+        /* display: flex; */
+        /* justify-content: center; */
+        margin: 0rem 1rem 1rem 1rem;
+        overflow-x: auto;
+        flex-direction: column;
       }
 
-      footer {
+      header {
+        display: contents;
+      }
+
+      #menuknap {
+        font-size: 3rem;
+        cursor: pointer;
         display: flex;
-        justify-content: center;
+        justify-content: end;
+        margin-right: 3rem;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      /* Menu end */
+
+      footer {
+        text-align: center;
         gap: 5rem;
         margin-top: 2rem;
         padding-bottom: 2rem;
@@ -92,18 +112,21 @@
 
       h1 {
         color: orangered;
-        display: flex;
-        justify-content: center;
+        text-align: center;
         background-color: orange;
         padding: 3rem;
-        font-size: 4.5rem;
+        font-size: 2.3rem;
         border-bottom: 0.125rem solid #000;
         text-transform: uppercase;
       }
 
+      h1:hover {
+        background-color: rgb(255, 208, 0);
+        /* color: rgb(255, 208, 0); */
+      }
+
       h2 {
-        display: flex;
-        justify-content: center;
+        text-align: center;
         margin-top: 0.8rem;
         margin-bottom: 0.5rem;
       }
@@ -171,20 +194,46 @@
       }
 
       @media (min-width: 542px){
-        header nav {
+        /* header nav {
           display: flex;
           justify-content: center;
           gap: 1rem;
           margin: 0.8rem 0rem;
           flex-direction: row;
+        } */
+
+        #menuknap {
+          display: none;
         }
+
+        .hidden {
+          display: flex;
+        }
+
+        header #menu {
+          display: flex;
+          margin: 0rem 5rem 1rem 5rem;
+          overflow-x:unset;
+          flex-direction: row;
+          justify-content: center;
+        }
+
+        h1 {
+        font-size: 4.5rem;
+        }
+
+        footer {
+          display: flex;
+          justify-content: center;
+        } 
       }
     </style>
   <body>
       <header>
-        <h1>Bistro Babushka</h1>
+        <a href="bistro_babushka.html#"><h1>Bis&shy;tro Babush&shy;ka</h1></a>
         <h2 class="txt_kategori">Alle</h2>
-          <nav>
+        <buttom id="menuknap">☰</buttom>
+          <nav id="menu" class="hidden">
             <button data-kategori="alle" class="valgt">Alle</button>
             <button data-kategori="forretter">Forretter</button>
             <button data-kategori="hovedretter">Hovedretter</button>
@@ -193,6 +242,7 @@
             <button data-kategori="drikkevarer">Drikkevarer</button>
          </nav>
       </header>
+
       <main>
     <section></section>
     </main>
@@ -222,6 +272,7 @@
         <button class="videre">Klik for alt info</button>
       </article>
     </section>
+    <script src="hambrugermenu.js"></script>
     <script>
       //Kontroller om DOM´en er loaded
       window.addEventListener("DOMContentLoaded", start);
