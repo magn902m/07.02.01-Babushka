@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bistro Babushka popup</title>
+    <title>Bistro Babushka</title>
 </head>
 <body>
     <style>
@@ -163,7 +163,7 @@
         margin-bottom: 0.2rem;
       }
 
-      #popup button {
+      #popup button:first-child {
         font-size: 1.5rem;
         position: absolute;
         top: 3vw;
@@ -219,6 +219,7 @@
         <p><b>Kategori: </b><span class="kategori"></span></p>
         <p><b>Beskrivelse: </b><span class="langbeskrivelse"></span></p>
         <p><b>Pris: </b><span class="pris"></span></p>
+        <button class="videre">Klik for alt info</button>
       </article>
     </section>
     <script>
@@ -300,6 +301,9 @@
             popup.querySelector(".kategori").textContent = detaljer.kategori;
             popup.querySelector(".langbeskrivelse").textContent = detaljer.langbeskrivelse;
             popup.querySelector(".pris").textContent = detaljer.pris + " kr.-";
+            popup.querySelector(".videre").addEventListener("click",()=>{
+              location.href = "single_view2.html?id=" + detaljer._id;
+            })
         }  
     </script>
 </body>

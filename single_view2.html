@@ -68,14 +68,13 @@
         padding: 3rem;
         font-size: 4.5rem;
         border-bottom: 0.125rem solid #000;
+        text-transform: uppercase;
       }
 
       h2 {
-        display: flex;
-        justify-content: center;
+        text-align: center;
         margin-top: 0.8rem;
         margin-bottom: 0.5rem;
-        grid-column: 2/3;
       }
 
       .valgt {
@@ -91,14 +90,11 @@
       }
 
       .menu {
+        display: grid;
         outline: 0.125rem solid orange;
         border: 1px solid orange;
         padding: 10px;
         border-radius: 5px;
-        display: grid;
-        grid-template-columns: 1fr 5fr 1fr;
-
-        place-content: center;
         /* cursor: pointer; */
         transition: 250ms ease-in;
         margin: 1rem;
@@ -113,22 +109,28 @@
       }
 
       .menu img {
-        max-width: 55%;
+        place-self: center;
+        max-width: 75%;
         border-radius: 5px;
         outline: 3px solid papayawhip;
         margin-bottom: 0.5rem;
-        grid-column: 2/3;
       }
 
       .menu p {
         margin-bottom: 0.2rem;
-        grid-column: 2/3;
+        text-align: center;
       }
 
       #back_knap {
-        position: absolute;
+        place-self: start;
+        /* position: absolute;
         top: 3vw;
-        left: 3vw;
+        left: 3vw; */
+      }
+
+      #mere_salg .section_wrapper {
+        display: flex;
+        grid-template-columns: repeat(3, 1fr);
       }
 
       @media (min-width: 542px) {
@@ -143,14 +145,45 @@
     </style>
   </head>
   <body>
-    <button id="back_knap">Tilbage!</button>
-    <article class="menu">
-      <h2><span class="navn"></span></h2>
-      <img src="" alt="" class="billede" />
-      <p><b>Kategori: </b><span class="kategori"></span></p>
-      <p><b>Beskrivelse: </b><span class="langbeskrivelse"></span></p>
-      <p><b>Pris: </b><span class="pris"></span></p>
-    </article>
+    <header>
+      <h1>Bistro Babushka</h1>
+    </header>
+    <main>
+      <article class="menu">
+        <button id="back_knap">Tilbage!</button>
+        <h2><span class="navn"></span></h2>
+        <img src="" alt="" class="billede" />
+        <p><b>Kategori: </b><span class="kategori"></span></p>
+        <p><b>Beskrivelse: </b><span class="langbeskrivelse"></span></p>
+        <p><b>Oprindelsesregion: </b><span class="oprindelsesregion"></span></p>
+        <p><b>Pris: </b><span class="pris"></span></p>
+        <p>
+          <b>Kontakt venlist personalet,<br />hvis du har allergier m.m.</b>
+        </p>
+      </article>
+
+      <section id="mere_salg">
+        <!-- <h2>Måske du ville kunne lide?</h2> -->
+        <section class="section_wrapper"></section>
+      </section>
+    </main>
+    <footer>
+      <p>Adresse:<br />Grønnegade 97a<br />1234 København K</p>
+      <p>
+        Åbenningstider:<br />Mandag - fredag 10:30 - 22:00<br />Lørdag 12:00 -
+        23:00
+      </p>
+    </footer>
+
+    <template id="mere_salg_temp">
+      <article class="menu">
+        <p><b>Kategori: </b><span class="kategori"></span></p>
+        <h2><span class="navn"></span></h2>
+        <img src="" alt="" class="billede" />
+        <p><b>Beskrivelse: </b><span class="kortbeskrivelse"></span></p>
+        <p><b>Pris: </b><span class="pris"></span></p>
+      </article>
+    </template>
 
     <script>
       const url = "https://babushka-dd8a.restdb.io/rest/menu/";
@@ -163,27 +196,49 @@
 
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get("id");
-      let type;
+
+      let madInfo;
+      let number = 0;
 
       document.addEventListener("DOMContentLoaded", loadJSON);
 
       async function loadJSON() {
         const JSONData = await fetch(url + id, options);
-        type = await JSONData.json();
-        console.log(type);
-        visPersoner();
+        const jsonFile = await JSONData.json();
+        madInfo = jsonFile;
+        console.log(madInfo);
+        visMad(jsonFile);
+        // visMereMad(jsonFile);
       }
 
-      function visPersoner() {
-        document.querySelector(".navn").textContent = type.navn;
+      function visMad(madInfo) {
+        document.querySelector(".navn").textContent = madInfo.navn;
         document.querySelector(".billede").src =
-          "medium/" + type.billednavn + "-md.jpg";
-        document.querySelector(".kategori").textContent = type.kategori;
+          "medium/" + madInfo.billednavn + "-md.jpg";
+        document.querySelector(".kategori").textContent = madInfo.kategori;
         document.querySelector(".langbeskrivelse").textContent =
-          type.langbeskrivelse;
+          madInfo.langbeskrivelse;
+        document.querySelector(".oprindelsesregion").textContent =
+          madInfo.oprindelsesregion;
         document.querySelector(".pris").textContent =
-          "Pris: " + type.pris + " kr.-";
+          "Pris: " + madInfo.pris + " kr.-";
       }
+
+      // function visMereMad(madInfo) {
+      //   // console.log("visMereMad");
+      //   const container = document.querySelector(".section_wrapper");
+      //   const temp = document.querySelector(".mere_salg_temp");
+      //   container.textContent = "";
+
+      //   madInfo.forEach((lidtInfo) => {
+      //     if (number < 3) {
+      //       let klon = temp.cloneNode(true).content;
+      //       klon.querySelector(".navn").textContent = lidtInfo.navn;
+      //       container.appendChild(klon);
+      //       number++;
+      //     }
+      //   });
+      // }
 
       // document.querySelector("button").addEventListener("click", () => {
       //   location.href = "bistro_babushka.html?id=";
