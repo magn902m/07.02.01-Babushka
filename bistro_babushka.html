@@ -78,6 +78,11 @@
         display: none;
       }
 
+      ul {
+        display: flex;
+        flex-direction: column;
+      }
+
       /* Menu end */
 
       footer {
@@ -218,6 +223,10 @@
           justify-content: center;
         }
 
+        ul {
+        flex-direction: row;
+      }
+
         h1 {
         font-size: 4.5rem;
         }
@@ -234,12 +243,14 @@
         <h2 class="txt_kategori">Alle</h2>
         <buttom id="menuknap">☰</buttom>
           <nav id="menu" class="hidden">
-            <button data-kategori="alle" class="valgt">Alle</button>
-            <button data-kategori="forretter">Forretter</button>
-            <button data-kategori="hovedretter">Hovedretter</button>
-            <button data-kategori="sideorders">Sideorders</button>
-            <button data-kategori="desserter">Desserter</button>
-            <button data-kategori="drikkevarer">Drikkevarer</button>
+            <ul>
+              <button data-kategori="alle" class="valgt">Alle</button>
+              <button data-kategori="forretter">Forretter</button>
+              <button data-kategori="hovedretter">Hovedretter</button>
+              <button data-kategori="sideorders">Sideorders</button>
+              <button data-kategori="desserter">Desserter</button>
+              <button data-kategori="drikkevarer">Drikkevarer</button>
+            </ul>
          </nav>
       </header>
 
