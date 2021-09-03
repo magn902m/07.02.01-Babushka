@@ -127,6 +127,7 @@ article .klik_info {
 #mere_salg .section_wrapper {
   display: flex;
   justify-content: center;
+  flex-direction: column;
 }
 
 @media (min-width: 542px) {
@@ -137,5 +138,11 @@ article .klik_info {
   footer {
     display: flex;
     justify-content: center;
+  }
+
+  #mere_salg .section_wrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
   }
 }
