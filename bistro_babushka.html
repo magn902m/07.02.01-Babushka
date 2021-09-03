@@ -289,43 +289,43 @@
       //Kontroller om DOM´en er loaded
       window.addEventListener("DOMContentLoaded", start);
 
-      function start() {
-
-        const url = "https://babushka-dd8a.restdb.io/rest/menu";
-        const key = "600ec2fb1346a1524ff12de4"
-        const options = {
+      const url = "https://babushka-dd8a.restdb.io/rest/menu";
+      const key = "600ec2fb1346a1524ff12de4"
+      const options = {
             headers: {
                 'x-apikey': key
             }
         };
 
-        let retter;
-        let filter = "alle";
-    
+      let retter;
+      let filter = "alle";
+
+      function start() {
         const filterKnapper = document.querySelectorAll("nav button");
         filterKnapper.forEach(knap => knap.addEventListener("click", filtrerKategori));
         loadJSON();
+      }
 
-        function filtrerKategori(){
-          filter = this.dataset.kategori;
-          document.querySelector(".valgt").classList.remove("valgt");
-          this.classList.add("valgt");
+      function filtrerKategori(){
+        filter = this.dataset.kategori;
+        document.querySelector(".valgt").classList.remove("valgt");
+        this.classList.add("valgt");
 
-          vis();
+        visRetter();
 
-          const txtKategori = document.querySelector("header .txt_kategori");
-          console.log(this);
-          txtKategori.textContent = "Flitrer: " + this.textContent;
+        const txtKategori = document.querySelector("header .txt_kategori");
+        console.log(this);
+        txtKategori.textContent = "Flitrer: " + this.textContent;
         }
 
         async function loadJSON() {
           const JSONData = await fetch(url, options);
           retter = await JSONData.json();
           console.log(retter);
-          vis();
+          visRetter();
         }
 
-        function vis() {
+        function visRetter() {
           const container = document.querySelector("section");
           const temp = document.querySelector("template");
           container.textContent = "";
@@ -344,8 +344,7 @@
             }
           });
           }
-        }
-
+        
         document.querySelector("#popup button").addEventListener("click", lukPopup);
 
         function lukPopup(){
@@ -353,19 +352,18 @@
         }
 
         function visDetaljer(ret){
-            console.log(ret);
-            const popup = document.querySelector("#popup");
-
-            popup.style.display = "block";
-            popup.querySelector(".navn").textContent = ret.navn;
-            popup.querySelector(".billede").src =
-              "medium/" + ret.billednavn + "-md.jpg";
-            popup.querySelector(".kategori").textContent = ret.kategori;
-            popup.querySelector(".langbeskrivelse").textContent = ret.langbeskrivelse;
-            popup.querySelector(".pris").textContent = ret.pris + " kr.-";
-            popup.querySelector(".videre").addEventListener("click",()=>{
-              location.href = "single_view2.html?id=" + ret._id;
-            })
+          console.log(ret);
+          const popup = document.querySelector("#popup");
+          popup.style.display = "block";
+          popup.querySelector(".navn").textContent = ret.navn;
+          popup.querySelector(".billede").src =
+            "medium/" + ret.billednavn + "-md.jpg";
+          popup.querySelector(".kategori").textContent = ret.kategori;
+          popup.querySelector(".langbeskrivelse").textContent = ret.langbeskrivelse;
+          popup.querySelector(".pris").textContent = ret.pris + " kr.-";
+          popup.querySelector(".videre").addEventListener("click",()=>{
+            location.href = "single_view2.html?id=" + ret._id;
+          })
         }  
     </script>
 </body>
