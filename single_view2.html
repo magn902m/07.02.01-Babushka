@@ -225,8 +225,8 @@
       async function loadJSON() {
         const JSONData = await fetch(url + id, options);
         const jsonFile = await JSONData.json();
-        madInfo = jsonFile;
-        console.log(madInfo);
+        ret = jsonFile;
+        // console.log(madInfo);
         visMad(jsonFile);
 
         // const JSONDataAlt = await fetch(url, options);
@@ -236,20 +236,20 @@
         // visMereMad(jsonFileAlt);
       }
 
-      function visMad(madInfo) {
-        document.querySelector(".navn").textContent = madInfo.navn;
+      function visMad(ret) {
+        document.querySelector(".navn").textContent = ret.navn;
         document.querySelector(".billede").src =
-          "medium/" + madInfo.billednavn + "-md.jpg";
-        document.querySelector(".kategori").textContent = madInfo.kategori;
+          "medium/" + ret.billednavn + "-md.jpg";
+        document.querySelector(".kategori").textContent = ret.kategori;
         document.querySelector(".langbeskrivelse").textContent =
-          madInfo.langbeskrivelse;
+          ret.langbeskrivelse;
         document.querySelector(".oprindelsesregion").textContent =
-          madInfo.oprindelsesregion;
-        document.querySelector(".pris").textContent = madInfo.pris + " kr.-";
+          ret.oprindelsesregion;
+        document.querySelector(".pris").textContent = ret.pris + " kr.-";
       }
 
       // function visMereMad(madInfoAlt) {
-      //   // console.log("visMereMad");
+      //   // console.log(madInfoAlt);
       //   const container = document.querySelector(".section_wrapper");
       //   const temp = document.querySelector(".mere_salg_temp");
       //   // container.textContent = "";
@@ -257,10 +257,10 @@
       //   madInfoAlt.forEach((kortMadInfo) => {
       //     console.log("Det virker, kortMadInfo");
       //     if (number < 3) {
-      //     let klon = temp.cloneNode(true).content;
-      //     klon.querySelector(".navn").textContent = kortMadInfo.navn;
-      //     container.appendChild(klon);
-      //     number++;
+      //       let klon = temp.cloneNode(true).content;
+      //       klon.querySelector(".navn").textContent = kortMadInfo.navn;
+      //       container.appendChild(klon);
+      //       number++;
       //     }
       //   });
       // }

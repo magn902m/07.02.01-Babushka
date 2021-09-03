@@ -172,6 +172,7 @@
         padding: 2rem;
         display: none;
         padding: 2% 10% 0 10%;
+        overflow: scroll;
       }
 
       #popup article {
@@ -298,7 +299,7 @@
             }
         };
 
-        let kategorier;
+        let retter;
         let filter = "alle";
     
         const filterKnapper = document.querySelectorAll("nav button");
@@ -319,9 +320,8 @@
 
         async function loadJSON() {
           const JSONData = await fetch(url, options);
-          const jsonFile = await JSONData.json();
-          kategorier = jsonFile;
-          console.log(jsonFile);
+          retter = await JSONData.json();
+          console.log(retter);
           vis();
         }
 
@@ -330,16 +330,16 @@
           const temp = document.querySelector("template");
           container.textContent = "";
 
-          kategorier.forEach((info) => {
-            if (filter == info.kategori || filter == "alle") {
+          retter.forEach((ret) => {
+            if (filter == ret.kategori || filter == "alle") {
             let klon = temp.cloneNode(true).content;
             const md = "-md.jpg";
-            klon.querySelector(".navn").textContent = info.navn;
-            klon.querySelector(".billede").src = "medium/" + info.billednavn + md;
-            klon.querySelector(".kategori").textContent = info.kategori;
-            klon.querySelector(".kortbeskrivelse").textContent = info.kortbeskrivelse;
-            klon.querySelector(".pris").textContent = "Pris: " + info.pris + " kr.-";
-            klon.querySelector("article").addEventListener("click",()=>visDetaljer(info));
+            klon.querySelector(".navn").textContent = ret.navn;
+            klon.querySelector(".billede").src = "medium/" + ret.billednavn + md;
+            klon.querySelector(".kategori").textContent = ret.kategori;
+            klon.querySelector(".kortbeskrivelse").textContent = ret.kortbeskrivelse;
+            klon.querySelector(".pris").textContent = "Pris: " + ret.pris + " kr.-";
+            klon.querySelector("article").addEventListener("click",()=>visDetaljer(ret));
             container.appendChild(klon);
             }
           });
@@ -352,19 +352,19 @@
             document.querySelector("#popup").style.display = "none";
         }
 
-        function visDetaljer(detaljer){
-            console.log(detaljer);
+        function visDetaljer(ret){
+            console.log(ret);
             const popup = document.querySelector("#popup");
 
             popup.style.display = "block";
-            popup.querySelector(".navn").textContent = detaljer.navn;
+            popup.querySelector(".navn").textContent = ret.navn;
             popup.querySelector(".billede").src =
-              "medium/" + detaljer.billednavn + "-md.jpg";
-            popup.querySelector(".kategori").textContent = detaljer.kategori;
-            popup.querySelector(".langbeskrivelse").textContent = detaljer.langbeskrivelse;
-            popup.querySelector(".pris").textContent = detaljer.pris + " kr.-";
+              "medium/" + ret.billednavn + "-md.jpg";
+            popup.querySelector(".kategori").textContent = ret.kategori;
+            popup.querySelector(".langbeskrivelse").textContent = ret.langbeskrivelse;
+            popup.querySelector(".pris").textContent = ret.pris + " kr.-";
             popup.querySelector(".videre").addEventListener("click",()=>{
-              location.href = "single_view2.html?id=" + detaljer._id;
+              location.href = "single_view2.html?id=" + ret._id;
             })
         }  
     </script>
