@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style_main.css" />
+    <title>Bistro Babushka</title>
+    <style></style>
+  </head>
+  <body>
+    <header>
+      <a href="bistro_babushka.html#"><h1>Bis&shy;tro Babush&shy;ka</h1></a>
+      <h2 class="txt_kategori">Alle</h2>
+      <buttom id="menuknap">☰</buttom>
+      <nav id="menu" class="hidden">
+        <ul>
+          <button data-kategori="alle" class="valgt">Alle</button>
+          <button data-kategori="forretter">Forretter</button>
+          <button data-kategori="hovedretter">Hovedretter</button>
+          <button data-kategori="sideorders">Sideorders</button>
+          <button data-kategori="desserter">Desserter</button>
+          <button data-kategori="drikkevarer">Drikkevarer</button>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section></section>
+    </main>
+    <footer>
+      <p>Adresse:<br />Grønnegade 97a<br />1234 København K</p>
+      <p>
+        Åbenningstider:<br />Mandag - fredag 10:30 - 22:00<br />Lørdag 12:00 -
+        23:00
+      </p>
+    </footer>
+    <template>
+      <article class="menu">
+        <h3 class="navn"></h3>
+        <img src="" alt="" class="billede" />
+        <h4 class="kategori"></h4>
+        <p class="kortbeskrivelse"></p>
+        <p class="pris"></p>
+        <p class="klik_info">Klik for mere info</p>
+      </article>
+    </template>
+
+    <section id="popup">
+      <button>X</button>
+      <article>
+        <h2><span class="navn"></span></h2>
+        <img src="" alt="" class="billede" />
+        <p><b>Kategori: </b><span class="kategori"></span></p>
+        <p><b>Beskrivelse: </b><span class="langbeskrivelse"></span></p>
+        <p><b>Pris: </b><span class="pris"></span></p>
+        <button class="videre">Klik for alt info</button>
+      </article>
+    </section>
+    <script src="js/hambrugermenu.js"></script>
+    <script src="js/javaScript_index.js"></script>
+    <script></script>
+  </body>
+</html>
