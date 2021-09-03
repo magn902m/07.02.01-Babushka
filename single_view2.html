@@ -203,7 +203,7 @@
       const id = urlParams.get("id");
 
       let retter;
-      // let number = 0;
+      let number = 0;
 
       document.addEventListener("DOMContentLoaded", loadJSON);
 
@@ -218,7 +218,7 @@
       async function loadJSONRetter() {
         const JSONDataRetter = await fetch(url2, options);
         retter = await JSONDataRetter.json();
-        console.log(retter);
+        // console.log(retter);
         visMadRetter(retter);
       }
 
@@ -241,16 +241,25 @@
         // container.textContent = "";
 
         retter.forEach((ret) => {
-          console.log("retter forEach");
-          // if (number < 3) {
-          let klon = temp.cloneNode(true).content;
-          klon.querySelector(".navn").textContent = ret.navn;
-          klon.querySelector(".billede").src =
-            "medium/" + ret.billednavn + "-md.jpg";
-          klon.querySelector(".pris").textContent = ret.pris + " kr.-";
-          container.appendChild(klon);
-          // number++;
-          // }
+          // console.log("retter forEach");
+          ret = retter[Math.round(Math.random() * 26)];
+
+          if (number < 3) {
+            let klon = temp.cloneNode(true).content;
+            klon.querySelector(".navn").textContent = ret.navn;
+            klon.querySelector(".billede").src =
+              "medium/" + ret.billednavn + "-md.jpg";
+            klon.querySelector(".pris").textContent = ret.pris + " kr.-";
+            klon
+              .querySelector("article")
+              .addEventListener(
+                "click",
+                () =>
+                  (document.location.href = "single_view2.html?id=" + ret._id)
+              );
+            container.appendChild(klon);
+            number++;
+          }
         });
       }
 
