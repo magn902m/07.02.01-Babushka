@@ -169,22 +169,7 @@
 
       <section id="mere_salg">
         <h2>Måske du ville kunne lide?</h2>
-        <section class="section_wrapper">
-          <article class="menu">
-            <p><b>Kategori: </b><span class="kategori"></span></p>
-            <h2><span class="navn"></span></h2>
-            <img src="" alt="" class="billede" />
-            <p><b>Beskrivelse: </b><span class="kortbeskrivelse"></span></p>
-            <p><b>Pris: </b><span class="pris"></span></p>
-          </article>
-          <article class="menu">
-            <p><b>Kategori: </b><span class="kategori"></span></p>
-            <h2><span class="navn"></span></h2>
-            <img src="" alt="" class="billede" />
-            <p><b>Beskrivelse: </b><span class="kortbeskrivelse"></span></p>
-            <p><b>Pris: </b><span class="pris"></span></p>
-          </article>
-        </section>
+        <section class="section_wrapper"></section>
       </section>
     </main>
     <footer>
@@ -195,12 +180,10 @@
       </p>
     </footer>
 
-    <template id="mere_salg_temp">
+    <template class="mere_salg_temp">
       <article class="menu">
-        <p><b>Kategori: </b><span class="kategori"></span></p>
         <h2><span class="navn"></span></h2>
         <img src="" alt="" class="billede" />
-        <p><b>Beskrivelse: </b><span class="kortbeskrivelse"></span></p>
         <p><b>Pris: </b><span class="pris"></span></p>
       </article>
     </template>
@@ -214,26 +197,29 @@
         },
       };
 
+      const url2 = "https://babushka-dd8a.restdb.io/rest/menu";
+
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get("id");
 
-      let madInfo;
+      let retter;
       // let number = 0;
 
       document.addEventListener("DOMContentLoaded", loadJSON);
 
       async function loadJSON() {
         const JSONData = await fetch(url + id, options);
-        const jsonFile = await JSONData.json();
-        ret = jsonFile;
-        // console.log(madInfo);
-        visMad(jsonFile);
+        ret = await JSONData.json();
+        // console.log(ret);
+        visMad(ret);
+        loadJSONRetter();
+      }
 
-        // const JSONDataAlt = await fetch(url, options);
-        // const jsonFileAlt = await JSONDataAlt.json();
-        // madInfoAlt = jsonFileAlt;
-        // console.log(madInfoAlt);
-        // visMereMad(jsonFileAlt);
+      async function loadJSONRetter() {
+        const JSONDataRetter = await fetch(url2, options);
+        retter = await JSONDataRetter.json();
+        console.log(retter);
+        visMadRetter(retter);
       }
 
       function visMad(ret) {
@@ -248,22 +234,25 @@
         document.querySelector(".pris").textContent = ret.pris + " kr.-";
       }
 
-      // function visMereMad(madInfoAlt) {
-      //   // console.log(madInfoAlt);
-      //   const container = document.querySelector(".section_wrapper");
-      //   const temp = document.querySelector(".mere_salg_temp");
-      //   // container.textContent = "";
+      function visMadRetter(retter) {
+        // console.log(retter);
+        const container = document.querySelector(".section_wrapper");
+        const temp = document.querySelector(".mere_salg_temp");
+        // container.textContent = "";
 
-      //   madInfoAlt.forEach((kortMadInfo) => {
-      //     console.log("Det virker, kortMadInfo");
-      //     if (number < 3) {
-      //       let klon = temp.cloneNode(true).content;
-      //       klon.querySelector(".navn").textContent = kortMadInfo.navn;
-      //       container.appendChild(klon);
-      //       number++;
-      //     }
-      //   });
-      // }
+        retter.forEach((ret) => {
+          console.log("retter forEach");
+          // if (number < 3) {
+          let klon = temp.cloneNode(true).content;
+          klon.querySelector(".navn").textContent = ret.navn;
+          klon.querySelector(".billede").src =
+            "medium/" + ret.billednavn + "-md.jpg";
+          klon.querySelector(".pris").textContent = ret.pris + " kr.-";
+          container.appendChild(klon);
+          // number++;
+          // }
+        });
+      }
 
       // document.querySelector("button").addEventListener("click", () => {
       //   location.href = "bistro_babushka.html?id=";
