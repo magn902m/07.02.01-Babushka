@@ -34,6 +34,25 @@ async function loadJSONRetter() {
   visMadRetter(retter);
 }
 
+//TEST start
+
+// async function loadJSON() {
+//   const JSONData = await fetch(url2, options);
+//   retter = await JSONData.json();
+//   // console.log(retter);
+//   visMadRetter(retter);
+//   madURL(retter);
+// }
+
+// function madURL(ret) {
+//   url + id;
+//   console.log(url + id);
+//   console.log(ret);
+//   visMad(ret);
+// }
+
+//TEST end
+
 function visMad(ret) {
   document.querySelector(".navn").textContent = ret.navn;
   document.querySelector(".billede").src =
